@@ -15,15 +15,15 @@ export function PizzaModPage() {
         (async () => {
             try {
             const res = await fetch(`https://pizza.kando-dev.eu/Pizza/${id}`, {});
-            const instrumentData = await res.json();
-            setModname(instrumentData.name);
-            setModGluten(instrumentData.isGlutenFree);
-            setModkepurl(instrumentData.kepURL);
+            const pizzaData = await res.json();
+            setModname(pizzaData.name);
+            setModGluten(pizzaData.isGlutenFree);
+            setModkepurl(pizzaData.kepURL);
         } catch (error) {
             console.log(error);   
         } 
     })();
-}, [id, modname, modkepurl]);
+}, [id, modname,modgluten, modkepurl]);
 
 const modName = (e) => {
     setModname(e.target.value);
@@ -42,11 +42,14 @@ return(
             e.preventDefault();
             fetch(`https://pizza.kando-dev.eu/Pizza/${id}`, {
                 method: "PUT",
-                credentials: "include",
+                headers:{
+                    "Content-Type": "application/json",
+                },
                 body: JSON.stringify({
-                    name: e.target.elements.name.value,
-                    isGlutenFree: e.target.elements.isGlutenFree.value,
-                    kepURL: e.target.elements.kepURL.value,
+                    "id": id,
+                    "name": e.target.elements.name.value,
+                    "isGlutenFree": (e.target.elements.isGlutenFree.checked? (1):(0)),
+                    "kepURL": e.target.elements.kepURL.value
                 }),
             })
             .then(() => {

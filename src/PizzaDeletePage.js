@@ -42,7 +42,7 @@ export function PizzaDeletePage() {
                             e.preventDefault();
                             await fetch(`https://pizza.kando-dev.eu/Pizza/${id}`, {
                                 method: "DELETE",
-                                credentials: "include",
+                                
                             });
                             navigate("/");}
                         catch(error) {

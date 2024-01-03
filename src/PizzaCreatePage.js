@@ -12,12 +12,14 @@ return (
             e.preventDefault();
             fetch("https://pizza.kando-dev.eu/Pizza", {
                 method: "POST",
-                credentials: "include",
+                headers:{
+                    "Content-Type": "application/json",
+                },
+                
                 body: JSON.stringify({
                     "name": e.target.elements.name.value,
-                    "isGlutenFree": e.target.elements.name.value,
-                    "kepURL": "string"
-
+                    "isGlutenFree": (e.target.elements.isGlutenFree.checked? (1):(0)),
+                    "kepURL": e.target.elements.kepURL.value
                 }),
             })
             .then(() => {
@@ -26,6 +28,7 @@ return (
             .catch(console.log);
         }}
             >
+            
             <div className='form-group row pb-3'>
                 <label htmlFor="name" className='col-sm-3 col-form-label'> Név: </label>
                     <div>
